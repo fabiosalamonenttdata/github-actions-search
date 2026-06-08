@@ -35,9 +35,20 @@ You can check extension behavior by moving [github-actions-search's actions tab]
 
 - `src/` - Source code
   - `content/` - Content scripts injected into GitHub pages
+  - `util/` - Utilities including i18n system
 - `public/` - Static assets
 - `test/` - Visual Regression Test files
 - `dist/` - Build output
+- `docs/` - Documentation including [i18n.md](./i18n.md)
+
+## Internationalization (i18n)
+
+The extension supports multiple languages (currently English and Japanese). For details on how to add new languages or modify translations, see [i18n.md](./i18n.md).
+
+Key files:
+
+- `src/content/util/i18n.ts` - Translation definitions
+- `src/content/util/translation-provider.tsx` - React Context provider for translations
 
 ## Building
 

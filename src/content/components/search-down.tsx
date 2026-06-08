@@ -10,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { usePins } from "@/content/hooks/use-pins"
 import { useWorkflowFiles } from "@/content/hooks/use-workflow-files"
 import { colors } from "@/content/theme"
+import { useTranslation } from "@/content/util/translation-provider"
 
 type SearchItem = {
   name: string
@@ -17,6 +18,7 @@ type SearchItem = {
 }
 
 export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<SearchItem[]>([])
@@ -97,7 +99,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
   }, [searchResults.length, selectedIndex])
 
   if (loading) return null
-  if (error) return <p>Error: Something went wrong.</p>
+  if (error) return <p>{t("errorMessage")}</p>
 
   return (
     <div
@@ -121,7 +123,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
         }}
       >
         <Search size={18} />
-        ワークフローを検索
+        {t("searchWorkflows")}
       </Button>
       {isOpen && (
         <div
@@ -151,7 +153,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
               }}
             >
               <Input
-                placeholder="検索キーワードを入力"
+                placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value)
@@ -180,7 +182,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
               onClick={toggleSearch}
               size="sm"
             >
-              閉じる
+              {t("closeButton")}
             </Button>
           </div>
           <ScrollArea
@@ -257,7 +259,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
                   // color: "#6B7280",
                 }}
               >
-                結果が見つかりません
+                {t("noResults")}
               </p>
             )}
           </ScrollArea>

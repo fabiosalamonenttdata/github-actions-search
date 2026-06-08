@@ -16,7 +16,7 @@ test("Visual Regression Testing", async ({ page }) => {
   )
 
   const openButton = page.getByRole("button", {
-    name: "ワークフローを検索",
+    name: "Search Workflows",
   })
 
   await openButton.waitFor({
@@ -29,7 +29,7 @@ test("Visual Regression Testing", async ({ page }) => {
 
   await openButton.click()
   const searchInput = page.getByRole("textbox", {
-    name: "検索キーワードを入力",
+    name: "Enter search keywords",
   })
   await searchInput.waitFor({
     state: "visible",

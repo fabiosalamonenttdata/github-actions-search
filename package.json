@@ -1,6 +1,6 @@
 {
   "name": "github-actions-search",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "license": "MIT",
   "config": {
@@ -15,7 +15,7 @@
     "lint": "pnpm /^lint:.*/",
     "lint:prettier": "pnpm run:prettier . --check",
     "lint:eslint": "pnpm run:eslint .",
-    "lint:cspell": "cspell lint './**/*.{tsx,ts,mts,mcs,mjs,cjs,js,json,md,yml,yaml}' --gitignore --cache",
+    "lint:cspell": "cspell lint \"./**/*.{tsx,ts,mts,mcs,mjs,cjs,js,json,md,yml,yaml}\" --gitignore --cache",
     "fix": "pnpm /^fix:.*/",
     "fix:prettier": "pnpm run:prettier . --write",
     "fix:eslint": "pnpm run:eslint . --fix",

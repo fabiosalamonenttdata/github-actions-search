@@ -6,7 +6,6 @@ A Chrome extension that enhances GitHub's Actions tab with search and personal p
 
 ![github-actions-search](https://github.com/user-attachments/assets/9d9a0b5a-9e2f-4fd8-909d-5f9647f58716)
 
-
 This extension addresses two major pain points when working with repositories containing numerous workflows:
 
 1. the lack of search functionality in the Actions tab
@@ -17,6 +16,7 @@ This extension addresses two major pain points when working with repositories co
 - Adds incremental search for workflow files
 - Provides personal workflow pinning without the 5-pin limit
 - Integrates seamlessly with GitHub's UI by adding controls to the Actions sidebar
+- **Multi-language support**: English and Japanese (auto-detected based on browser language)
 
 ## Installation
 
@@ -28,6 +28,15 @@ Chrome Web Store publication is under consideration.
 The extension monitors page navigation and adds search functionality to the Actions tab. It fetches workflow files from `.github/workflows/` in the repository's main branch using your GitHub session.
 
 Note that the workflow list might slightly differ from GitHub's native list as it's based on actual workflow files (e.g., Dependabot Alerts without workflow files won't appear).
+
+## Language Support
+
+The extension automatically detects your browser language:
+
+- **English** (en)
+- **日本語** (ja)
+
+If your browser language is not supported, it defaults to English.
 
 ## Contribute
 

@@ -1,7 +1,9 @@
 import * as v from "valibot"
 import type { Repository } from "@/schema/repository"
 
-const treeInfoSchema = v.record(v.string(), v.unknown())
+const treeInfoSchema = v.object({
+  entries: v.record(v.string(), v.unknown()),
+})
 
 export const fetchWorkflowFiles = async (
   repo: Repository,
@@ -19,7 +21,13 @@ export const fetchWorkflowFiles = async (
     }
   )
 
-  return await response
-    .json()
-    .then((data: unknown) => Object.keys(v.parse(treeInfoSchema, data)))
+  return await response.json().then((data: unknown) => {
+    const parsed = v.parse(treeInfoSchema, data)
+    const workflowFiles = Object.keys(parsed.entries)
+    console.log(
+      `[GitHub Actions Search] Found ${String(workflowFiles.length)} workflow files:`,
+      workflowFiles
+    )
+    return workflowFiles
+  })
 }

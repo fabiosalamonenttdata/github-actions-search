@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.0.6
+
+### &nbsp;&nbsp;&nbsp;Features
+
+- Add multi-language support (English and Japanese) with automatic browser language detection
+- Implement i18n (Internationalization) system with easy extensibility for future languages
+- Add console logging for workflow discovery debugging
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- Fix workflow files parsing to correctly extract entries from GitHub API response
+- Resolve issue where "No results found" was shown despite workflows being present
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/d-kimuson/github-actions-search/compare/v0.0.5...0.0.6)
+
 ## 0.0.5
 
 _No significant changes_
