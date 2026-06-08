@@ -27,7 +27,11 @@ describe("useWorkflowFiles", () => {
                 },
               })
             ),
-            fetchWorkflowFiles: vi.fn(() => Promise.resolve(["sample.yaml"])),
+            fetchWorkflowFiles: vi.fn(() =>
+              Promise.resolve([
+                { fileName: "sample.yaml", displayName: "Sample Workflow" },
+              ])
+            ),
           }}
         >
           {children}
@@ -47,7 +51,11 @@ describe("useWorkflowFiles", () => {
       wrapper: ({ children }) => (
         <MockRepositoryProvider
           repository={{
-            fetchWorkflowFiles: vi.fn(() => Promise.resolve(["sample.yaml"])),
+            fetchWorkflowFiles: vi.fn(() =>
+              Promise.resolve([
+                { fileName: "sample.yaml", displayName: "Sample Workflow" },
+              ])
+            ),
           }}
         >
           {children}
@@ -62,7 +70,9 @@ describe("useWorkflowFiles", () => {
     expect(result.current).toStrictEqual({
       error: undefined,
       loading: false,
-      workflowFiles: ["sample.yaml"],
+      workflowFiles: [
+        { fileName: "sample.yaml", displayName: "Sample Workflow" },
+      ],
     })
   })
 })

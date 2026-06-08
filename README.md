@@ -17,6 +17,7 @@ This extension addresses two major pain points when working with repositories co
 - Provides personal workflow pinning without the 5-pin limit
 - Integrates seamlessly with GitHub's UI by adding controls to the Actions sidebar
 - **Multi-language support**: English and Japanese (auto-detected based on browser language)
+- **Smart workflow display**: Shows the workflow's `name` from YAML files instead of filenames for better identification
 
 ## Installation
 

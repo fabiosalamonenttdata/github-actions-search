@@ -13,7 +13,8 @@ import { colors } from "@/content/theme"
 import { useTranslation } from "@/content/util/translation-provider"
 
 type SearchItem = {
-  name: string
+  fileName: string // Used for URL and pin identification
+  displayName: string // Used for display in UI
   url: string
 }
 
@@ -27,12 +28,13 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
   const { loading, error, workflowFiles } = useWorkflowFiles(repo)
   const dummyData = useMemo((): SearchItem[] => {
     return (
-      workflowFiles?.map((fileName) => ({
-        name: fileName,
-        url: `https://github.com/${repo.owner}/${repo.repo}/actions/workflows/${fileName}`,
+      workflowFiles?.map((workflow) => ({
+        fileName: workflow.fileName,
+        displayName: workflow.displayName,
+        url: `https://github.com/${repo.owner}/${repo.repo}/actions/workflows/${workflow.fileName}`,
       })) ?? []
     )
-  }, [workflowFiles])
+  }, [workflowFiles, repo.owner, repo.repo])
   const { pins, addPin, isPinned, removePin } = usePins(repo)
 
   const toggleSearch = () => {
@@ -57,12 +59,16 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
 
   useEffect(() => {
     const filteredResults = dummyData
-      .filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .toSorted((a) => (isPinned(a.name) ? -1 : 1))
+      .filter((item) => {
+        const query = searchQuery.toLowerCase()
+        return (
+          item.displayName.toLowerCase().includes(query) ||
+          item.fileName.toLowerCase().includes(query)
+        )
+      })
+      .toSorted((a) => (isPinned(a.fileName) ? -1 : 1))
     setSearchResults(filteredResults)
-  }, [searchQuery, dummyData, pins])
+  }, [searchQuery, dummyData, pins, isPinned])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -204,7 +210,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
               >
                 {searchResults.map((result, index) => (
                   <li
-                    key={result.name}
+                    key={result.fileName}
                     style={{
                       fontSize: "14px",
                       display: "flex",
@@ -219,10 +225,10 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
                   >
                     <Button
                       onClick={() => {
-                        if (isPinned(result.name)) {
-                          removePin(result.name)
+                        if (isPinned(result.fileName)) {
+                          removePin(result.fileName)
                         } else {
-                          addPin(result.name)
+                          addPin(result.fileName)
                         }
                       }}
                       style={{
@@ -235,7 +241,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
                       }}
                     >
                       <Pin
-                        fill={isPinned(result.name) ? "yellow" : "gray"}
+                        fill={isPinned(result.fileName) ? "yellow" : "gray"}
                         size={14}
                       />
                     </Button>
@@ -247,7 +253,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {result.name}
+                      {result.displayName}
                     </a>
                   </li>
                 ))}

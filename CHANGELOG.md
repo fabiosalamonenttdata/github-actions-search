@@ -7,6 +7,7 @@
 - Add multi-language support (English and Japanese) with automatic browser language detection
 - Implement i18n (Internationalization) system with easy extensibility for future languages
 - Add console logging for workflow discovery debugging
+- **Display workflow names from YAML files**: Show the `name` field from workflow YAML files instead of just the filename, providing more meaningful workflow identification
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
 

@@ -1,11 +1,12 @@
 import { atom, useAtom } from "jotai"
 import { useEffect } from "react"
+import type { WorkflowFile } from "@/content/repository/workflow"
 import type { LoadableState } from "@/content/util/types"
 import type { Repository } from "@/schema/repository"
 import { useDefaultBranch } from "@/content/hooks/use-default-branch"
 import { useRepository } from "@/content/repository"
 
-const workflowFilesAtom = atom<LoadableState<string[]>>({
+const workflowFilesAtom = atom<LoadableState<WorkflowFile[]>>({
   status: "idle",
 })
 
