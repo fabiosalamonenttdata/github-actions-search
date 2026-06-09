@@ -2,7 +2,7 @@
 
 This project uses Playwright for visual regression testing to ensure UI consistency across changes.
 
-## 📸 Snapshots by Platform
+## Snapshots by Platform
 
 Visual regression tests generate platform-specific snapshots:
 
@@ -10,7 +10,7 @@ Visual regression tests generate platform-specific snapshots:
 - **Windows**: `*-chromium-win32.png` (for local development on Windows)
 - **macOS**: `*-chromium-darwin.png` (for local development on macOS)
 
-## 🧪 Running Tests Locally
+## Running Tests Locally
 
 ### Run Tests
 
@@ -26,7 +26,7 @@ pnpm vrt:update
 
 This will update snapshots for your current platform (Windows, macOS, or Linux).
 
-## 🔄 Updating Linux Snapshots (for CI)
+## Updating Linux Snapshots (for CI)
 
 Since CI runs on Linux, you need to update Linux snapshots when the UI changes.
 
@@ -46,7 +46,7 @@ Since CI runs on Linux, you need to update Linux snapshots when the UI changes.
 docker run --rm -v ${PWD}:/work -w /work mcr.microsoft.com/playwright:v1.49.1 /bin/bash -c "npm install -g pnpm && pnpm install && pnpm vrt:update"
 ```
 
-## 📊 Threshold Configuration
+## Threshold Configuration
 
 Current threshold: **0.04** (4% pixel difference allowed)
 
@@ -66,28 +66,28 @@ await expect(page).toHaveScreenshot("name.png", {
 })
 ```
 
-## 🐛 When Tests Fail
+## When Tests Fail
 
 If visual regression tests fail:
 
 1. **Review the diff images** in `test/output/` directory
 2. **Determine if changes are intentional**:
 
-   - ✅ **Intentional**: Update snapshots with `pnpm vrt:update`
-   - ❌ **Bug**: Fix the UI issue causing the difference
+   - **Intentional**: Update snapshots with `pnpm vrt:update`
+   - **Bug**: Fix the UI issue causing the difference
 
 3. **For CI failures on Linux**:
    - Run the "Update Visual Regression Snapshots" workflow on GitHub
    - Or increase the threshold if differences are acceptable
 
-## 📝 Adding New Visual Tests
+## Adding New Visual Tests
 
 1. Add new test cases in `test/regression.spec.ts`
 2. Run `pnpm vrt:update` to generate initial snapshots
 3. Commit both the test code and generated snapshots
 4. Run the "Update Visual Regression Snapshots" workflow on GitHub to generate Linux versions
 
-## 🚨 Important Notes
+## Important Notes
 
 - **Always commit snapshots for all platforms** to support different development environments
 - **CI uses Linux snapshots** - make sure they're up to date before release
