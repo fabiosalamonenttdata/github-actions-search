@@ -13,6 +13,12 @@
 
 - Fix workflow files parsing to correctly extract entries from GitHub API response
 - Resolve issue where "No results found" was shown despite workflows being present
+- Fix CORS issue when fetching workflow YAML files from raw.githubusercontent.com
+
+### &nbsp;&nbsp;&nbsp;Chore
+
+- Increase visual regression test threshold to 0.04 to accommodate UI changes from new features
+- Add workflow for updating visual regression snapshots on Linux via GitHub Actions
 
 ##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/d-kimuson/github-actions-search/compare/v0.0.5...0.0.6)
 

@@ -1,0 +1,43 @@
+name: Update Visual Regression Snapshots
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-snapshots:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build extension
+        run: pnpm build
+
+      - name: Update snapshots
+        run: pnpm vrt:update
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Commit and push updated snapshots
+        run: |
+          git add test/snapshots/
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update visual regression snapshots [skip ci]"
+            git push
+          else
+            echo "No snapshot changes to commit"
+          fi

@@ -43,4 +43,7 @@ If your browser language is not supported, it defaults to English.
 
 Contributions are welcome! Feel free to submit issues and pull requests.
 
-See [docs/development.md](./docs/development.md).
+See:
+
+- [Development Guide](./docs/development.md)
+- [Visual Regression Testing](./VISUAL_TESTS.md)
