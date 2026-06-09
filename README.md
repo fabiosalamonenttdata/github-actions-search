@@ -21,7 +21,7 @@ This extension addresses two major pain points when working with repositories co
 
 ## Installation
 
-Download the latest release from the [latest releases page](https://github.com/d-kimuson/github-actions-search/releases/latest).
+Download the latest release from the [latest releases page](https://github.com/fabiosalamonenttdata/github-actions-search/releases/latest).
 Chrome Web Store publication is under consideration.
 
 ## How It Works
