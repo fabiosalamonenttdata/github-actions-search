@@ -29,8 +29,11 @@ describe("useWorkflowFiles", () => {
             ),
             fetchWorkflowFiles: vi.fn(() =>
               Promise.resolve([
-                { fileName: "sample.yaml", displayName: "Sample Workflow" },
+                { fileName: "sample.yaml", displayName: "sample.yaml" },
               ])
+            ),
+            fetchWorkflowDisplayName: vi.fn(() =>
+              Promise.resolve("Sample Workflow")
             ),
           }}
         >
@@ -53,8 +56,11 @@ describe("useWorkflowFiles", () => {
           repository={{
             fetchWorkflowFiles: vi.fn(() =>
               Promise.resolve([
-                { fileName: "sample.yaml", displayName: "Sample Workflow" },
+                { fileName: "sample.yaml", displayName: "sample.yaml" },
               ])
+            ),
+            fetchWorkflowDisplayName: vi.fn(() =>
+              Promise.resolve("Sample Workflow")
             ),
           }}
         >

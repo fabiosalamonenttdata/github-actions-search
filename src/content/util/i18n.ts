@@ -6,6 +6,7 @@ type TranslationKeys = {
   closeButton: string
   noResults: string
   errorMessage: string
+  loading: string
 }
 
 const translations: Record<Language, TranslationKeys> = {
@@ -15,6 +16,7 @@ const translations: Record<Language, TranslationKeys> = {
     closeButton: "Close",
     noResults: "No results found.",
     errorMessage: "Error: Something went wrong.",
+    loading: "Loading workflows...",
   },
   ja: {
     searchWorkflows: "ワークフローを検索",
@@ -22,6 +24,7 @@ const translations: Record<Language, TranslationKeys> = {
     closeButton: "閉じる",
     noResults: "結果が見つかりません",
     errorMessage: "エラー: 問題が発生しました。",
+    loading: "ワークフローを読み込み中...",
   },
 }
 

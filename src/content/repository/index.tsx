@@ -1,10 +1,14 @@
 import { createContext, useContext } from "react"
 import type { FC, PropsWithChildren } from "react"
 import { fetchBranches } from "@/content/repository/branch"
-import { fetchWorkflowFiles } from "@/content/repository/workflow"
+import {
+  fetchWorkflowDisplayName,
+  fetchWorkflowFiles,
+} from "@/content/repository/workflow"
 
 const defaultRepository = {
   fetchWorkflowFiles,
+  fetchWorkflowDisplayName,
   fetchBranches,
 } as const
 

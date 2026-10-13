@@ -13,7 +13,7 @@ const workflowFilesAtom = atom<LoadableState<WorkflowFile[]>>({
 export const useWorkflowFiles = (repo: Repository) => {
   const [workflowFilesState, setWorkflowFilesState] = useAtom(workflowFilesAtom)
   const { defaultBranch } = useDefaultBranch(repo)
-  const { fetchWorkflowFiles } = useRepository()
+  const { fetchWorkflowFiles, fetchWorkflowDisplayName } = useRepository()
 
   useEffect(() => {
     if (defaultBranch === undefined) {
@@ -29,6 +29,25 @@ export const useWorkflowFiles = (repo: Repository) => {
             status: "loaded",
             value: workflowFiles,
           })
+
+          for (const { fileName } of workflowFiles) {
+            void fetchWorkflowDisplayName(repo, defaultBranch, fileName).then(
+              (displayName) => {
+                setWorkflowFilesState((prev) =>
+                  prev.status === "loaded"
+                    ? {
+                        ...prev,
+                        value: prev.value.map((file) =>
+                          file.fileName === fileName
+                            ? { ...file, displayName }
+                            : file
+                        ),
+                      }
+                    : prev
+                )
+              }
+            )
+          }
         })
         .catch((error: unknown) => {
           setWorkflowFilesState({ status: "error", error })

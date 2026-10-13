@@ -58,7 +58,7 @@ const extractWorkflowName = (yamlContent: string): string | null => {
 /**
  * Fetch the workflow file content and extract its display name
  */
-const fetchWorkflowDisplayName = async (
+export const fetchWorkflowDisplayName = async (
   repo: Repository,
   defaultBranch: string,
   fileName: string
@@ -120,24 +120,6 @@ export const fetchWorkflowFiles = async (
     fileNames
   )
 
-  // Fetch display names for all workflows in parallel
-  const workflowFiles = await Promise.all(
-    fileNames.map(async (fileName) => {
-      const displayName = await fetchWorkflowDisplayName(
-        repo,
-        defaultBranch,
-        fileName
-      )
-      return {
-        fileName,
-        displayName,
-      }
-    })
-  )
-
-  console.log(
-    `[GitHub Actions Search] Loaded display names for ${String(workflowFiles.length)} workflows:`
-  )
-
-  return workflowFiles
+  // Display names are resolved lazily (see useWorkflowFiles) so the list is usable immediately
+  return fileNames.map((fileName) => ({ fileName, displayName: fileName }))
 }
