@@ -6,7 +6,6 @@ import type { Repository } from "@/schema/repository"
 import type { FC } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { usePins } from "@/content/hooks/use-pins"
 import { useWorkflowFiles } from "@/content/hooks/use-workflow-files"
 import { colors } from "@/content/theme"
@@ -22,7 +21,6 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [searchResults, setSearchResults] = useState<SearchItem[]>([])
   const [selectedIndex, setSelectedIndex] = useState(0)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const { loading, error, workflowFiles } = useWorkflowFiles(repo)
@@ -37,14 +35,30 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
   }, [workflowFiles, repo.owner, repo.repo])
   const { pins, addPin, isPinned, removePin } = usePins(repo)
 
+  // Derived with useMemo: storing this in state via useEffect caused an infinite render loop
+  // (isPinned is a new function on every render), pegging the main thread.
+  const searchResults = useMemo(() => {
+    const query = searchQuery.toLowerCase()
+    return dummyData
+      .filter(
+        (item) =>
+          item.displayName.toLowerCase().includes(query) ||
+          item.fileName.toLowerCase().includes(query)
+      )
+      .toSorted((a) => (pins.includes(a.fileName) ? -1 : 1))
+  }, [searchQuery, dummyData, pins])
+
   const toggleSearch = () => {
     setIsOpen((prev) => !prev)
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {
+    if (!isOpen || searchResults.length === 0) return
     if (e.key === "ArrowDown") {
+      e.preventDefault()
       setSelectedIndex((prevIndex) => (prevIndex + 1) % searchResults.length)
     } else if (e.key === "ArrowUp") {
+      e.preventDefault()
       setSelectedIndex(
         (prevIndex) =>
           (prevIndex - 1 + searchResults.length) % searchResults.length
@@ -56,19 +70,6 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
       }
     }
   }
-
-  useEffect(() => {
-    const filteredResults = dummyData
-      .filter((item) => {
-        const query = searchQuery.toLowerCase()
-        return (
-          item.displayName.toLowerCase().includes(query) ||
-          item.fileName.toLowerCase().includes(query)
-        )
-      })
-      .toSorted((a) => (isPinned(a.fileName) ? -1 : 1))
-    setSearchResults(filteredResults)
-  }, [searchQuery, dummyData, pins, isPinned])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -102,9 +103,15 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [searchResults.length, selectedIndex])
+  }, [isOpen, searchResults, selectedIndex])
 
-  if (loading) return null
+  useEffect(() => {
+    if (!isOpen) return
+    dropdownRef.current
+      ?.querySelector(`li[data-index="${String(selectedIndex)}"]`)
+      ?.scrollIntoView({ block: "nearest" })
+  }, [isOpen, selectedIndex])
+
   if (error) return <p>{t("errorMessage")}</p>
 
   return (
@@ -163,6 +170,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value)
+                  setSelectedIndex(0)
                 }}
                 style={{
                   paddingLeft: "32px",
@@ -191,16 +199,19 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
               {t("closeButton")}
             </Button>
           </div>
-          <ScrollArea
+          <div
             style={{
               maxHeight: "70vh",
+              overflowY: "auto",
               width: "100%",
               borderRadius: "6px",
               border: "1px solid #E5E7EB",
               padding: "8px",
             }}
           >
-            {searchResults.length > 0 ? (
+            {loading ? (
+              <p style={{ fontSize: "14px" }}>{t("loading")}</p>
+            ) : searchResults.length > 0 ? (
               <ul
                 style={{
                   display: "flex",
@@ -211,6 +222,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
                 {searchResults.map((result, index) => (
                   <li
                     key={result.fileName}
+                    data-index={index}
                     style={{
                       fontSize: "14px",
                       display: "flex",
@@ -268,7 +280,7 @@ export const SearchDropdown: FC<{ repo: Repository }> = ({ repo }) => {
                 {t("noResults")}
               </p>
             )}
-          </ScrollArea>
+          </div>
         </div>
       )}
     </div>

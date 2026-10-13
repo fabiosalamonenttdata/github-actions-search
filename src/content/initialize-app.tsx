@@ -16,6 +16,10 @@ export const { initializeApp, cleanApp } = (() => {
         return false
       }
 
+      // On SPA navigation the previous root would otherwise leak and keep running
+      reactRoot?.unmount()
+      document.getElementById("crx-root")?.remove()
+
       const root = document.createElement("div")
       root.id = "crx-root"
       sidebarElement.prepend(root)
