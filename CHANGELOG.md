@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- **ui**: Stop render loop and fix list scrolling &nbsp;-&nbsp; by **Fabio Salamone** and **Copilot** [<samp>(b12ce)</samp>](https://github.com/fabiosalamonenttdata/github-actions-search/commit/b12ceeb)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/fabiosalamonenttdata/github-actions-search/compare/v1.0.0...1.0.1)
+
 ## 1.0.0
 
 ### &nbsp;&nbsp;&nbsp;Features
