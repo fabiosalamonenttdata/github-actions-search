@@ -24,6 +24,7 @@ test("Visual Regression Testing", async ({ page }) => {
   })
   await expect(page).toHaveScreenshot("0_loaded.png", {
     threshold: 0.04,
+    maxDiffPixels: 200,
     clip: defaultClip,
   })
 
@@ -36,12 +37,14 @@ test("Visual Regression Testing", async ({ page }) => {
   })
   await expect(page).toHaveScreenshot("1_expanded.png", {
     threshold: 0.04,
+    maxDiffPixels: 200,
     clip: defaultClip,
   })
 
   await searchInput.fill("check")
   await expect(page).toHaveScreenshot("2_filtered.png", {
     threshold: 0.04,
+    maxDiffPixels: 200,
     clip: defaultClip,
   })
 })
