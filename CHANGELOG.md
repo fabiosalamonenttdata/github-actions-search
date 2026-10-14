@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- **ui**: Mount search on new Actions sidebar &nbsp;-&nbsp; by **Fabio Salamone** and **Copilot** [<samp>(1a9b1)</samp>](https://github.com/fabiosalamonenttdata/github-actions-search/commit/1a9b19b)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/fabiosalamonenttdata/github-actions-search/compare/v1.0.1...1.0.2)
+
 ## 1.0.1
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
