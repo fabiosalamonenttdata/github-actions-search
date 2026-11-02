@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3
+
+### &nbsp;&nbsp;&nbsp;Bug Fixes
+
+- **ui**: Update nav aria-label for workflows &nbsp;-&nbsp; by **Fabio Salamone** [<samp>(10822)</samp>](https://github.com/fabiosalamonenttdata/github-actions-search/commit/1082209)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/fabiosalamonenttdata/github-actions-search/compare/v1.0.2...1.0.3)
+
 ## 1.0.2
 
 ### &nbsp;&nbsp;&nbsp;Bug Fixes
