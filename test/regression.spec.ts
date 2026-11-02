@@ -35,6 +35,13 @@ test("Visual Regression Testing", async ({ page }) => {
   await searchInput.waitFor({
     state: "visible",
   })
+  const workflowLinks = page.locator("#crx-root").getByRole("link")
+  await expect(workflowLinks).toHaveText([
+    "Check",
+    "Create Release",
+    "Visual Regression Tests",
+    "Update Snapshots",
+  ])
   await expect(page).toHaveScreenshot("1_expanded.png", {
     threshold: 0.04,
     maxDiffPixels: 200,
@@ -42,6 +49,7 @@ test("Visual Regression Testing", async ({ page }) => {
   })
 
   await searchInput.fill("check")
+  await expect(workflowLinks).toHaveText(["Check"])
   await expect(page).toHaveScreenshot("2_filtered.png", {
     threshold: 0.04,
     maxDiffPixels: 200,
